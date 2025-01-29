@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Timetable</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .entry {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="day-title">Monday's Timetable</h1>
+        <div id="timetable"></div>
+        <button onclick="prevDay()">&lt; Prev</button>
+        <button onclick="nextDay()">Next &gt;</button>
+    </div>
+
+    <script>
+        const timetable = {
+            Monday: [
+                { time: "8:30am - 9:25am", subject: "MA110", venue: "LA201" },
+                { time: "9:30am - 10:25am", subject: "ES204", venue: "LT205" },
+                { time: "10:30am - 11:30am", subject: "MS101", venue: "LA202" },
+                { time: "2:00pm - 5:00pm", subject: "MS ME Lab", venue: "Lab" },
+            ],
+            Tuesday: [
+                { time: "8:30am - 9:30am", subject: "ES204", venue: "LT306" },
+                { time: "9:30am - 10:30am", subject: "MA110", venue: "LA201" },
+            ],
+            Wednesday: [
+                { time: "8:30am - 9:30am", subject: "MS101", venue: "LA202" },
+                { time: "11:00am - 12:30pm", subject: "CS101", venue: "LA201" },
+                { time: "3:00pm - 4:00pm", subject: "Maths Tutorial", venue: "LT002" },
+            ],
+            Thursday: [
+                { time: "9:30am - 10:30am", subject: "ES101", venue: "LT306" },
+                { time: "10:30am - 11:30am", subject: "MA110", venue: "LA201" },
+                { time: "2:00pm - 5:00pm", subject: "MS101 Lab", venue: "Energy Building" },
+                { time: "8:45pm - 11:00pm", subject: "CS101 Lab", venue: "CC Building" },
+            ],
+            Friday: [
+                { time: "11:30am - 12:30pm", subject: "CS101", venue: "LA201" },
+                { time: "2:00pm - 5:00pm", subject: "PH110 Lab", venue: "Transit Building" },
+            ],
+        };
+        
+        const days = Object.keys(timetable);
+        let currentDayIndex = new Date().getDay() - 1;
+        if (currentDayIndex < 0 || currentDayIndex >= days.length) {
+            currentDayIndex = 0;
+        }
+
+        function renderTimetable() {
+            const day = days[currentDayIndex];
+            document.getElementById("day-title").innerText = `${day}'s Timetable`;
+            const entries = timetable[day]
+                .map(entry => `<div class="entry"><h3>${entry.subject}</h3><p>${entry.time}</p><p>${entry.venue}</p></div>`)
+                .join("\n");
+            document.getElementById("timetable").innerHTML = entries;
+        }
+
+        function nextDay() {
+            currentDayIndex = (currentDayIndex + 1) % days.length;
+            renderTimetable();
+        }
+
+        function prevDay() {
+            currentDayIndex = (currentDayIndex - 1 + days.length) % days.length;
+            renderTimetable();
+        }
+
+        renderTimetable();
+    </script>
+</body>
+</html>
