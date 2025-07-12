@@ -90,10 +90,13 @@
         };
         
         const days = Object.keys(timetable);
-        let currentDayIndex = new Date().getDay();
-        if (currentDayIndex < 0 || currentDayIndex >= days.length) {
-            currentDayIndex = 0;
-        }
+       let currentDayIndex = new Date().getDay();
+if (currentDayIndex === 0) {
+    currentDayIndex = 6;  // Sunday
+} else {
+    currentDayIndex -= 1; // Adjust other days to match days array
+}
+
 
         function renderTimetable() {
             const day = days[currentDayIndex];
