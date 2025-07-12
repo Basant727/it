@@ -90,7 +90,7 @@
         };
         
         const days = Object.keys(timetable);
-        let currentDayIndex = new Date().getDay() - 1;
+        let currentDayIndex = new Date().getDay();
         if (currentDayIndex < 0 || currentDayIndex >= days.length) {
             currentDayIndex = 0;
         }
