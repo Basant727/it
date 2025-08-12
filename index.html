@@ -81,7 +81,7 @@
             ],
             Saturday: [
                 { time: "Whole Day", subject: "Enjoy", venue: "" },
-                 { time:  " "                , subject: "NOTICE" , venue: "https://drive.google.com/file/d/1yqdL4pbTT8EZv_RFJ3B6DhVhFKJHCiAj/view?usp=sharing "},
+                 { time:  " "                , subject: "NOTICE" , venue: " "},
             ],
             Sunday: [
                 { time: "Whole Day", subject: "Enjoy", venue: "" },
@@ -99,29 +99,13 @@ if (currentDayIndex === 0) {
 
 
         function renderTimetable() {
-                const day = days[currentDayIndex];
-                document.getElementById("day-title").innerText = `${day}'s Timetable`;
-            
-                const entries = timetable[day].map(entry => {
-                    if (entry.subject.startsWith("NOTICE")) {
-                        return `<div class="entry">
-                                    <h3>${entry.subject}</h3>
-                                    <img src="${entry.venue}" 
-                                         alt="Notice Image" 
-                                         style="max-width:100%;border-radius:8px;margin-top:10px;">
-                                </div>`;
-                    } else {
-                        return `<div class="entry">
-                                    <h3>${entry.subject}</h3>
-                                    <p>${entry.time}</p>
-                                    <p>${entry.venue}</p>
-                                </div>`;
-                    }
-                }).join("\n");
-            
-                document.getElementById("timetable").innerHTML = entries;
-            }
-
+            const day = days[currentDayIndex];
+            document.getElementById("day-title").innerText = `${day}'s Timetable`;
+            const entries = timetable[day]
+                .map(entry => `<div class="entry"><h3>${entry.subject}</h3><p>${entry.time}</p><p>${entry.venue}</p></div>`)
+                .join("\n");
+            document.getElementById("timetable").innerHTML = entries;
+        }
 
         function nextDay() {
             currentDayIndex = (currentDayIndex + 1) % days.length;
